@@ -1,0 +1,116 @@
+<Schema name="shemaAchats">
+  <Dimension type="StandardDimension" visible="true" name="vendor">
+    <Hierarchy name="New Hierarchy 0" visible="true" hasAll="true">
+      <Table name="vendor" schema="dbo" alias="">
+      </Table>
+      <Level name="idVendor" visible="true" table="vendor" column="idVendor" type="Numeric" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Name" visible="true" table="vendor" column="Name" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="adressCityS" visible="true" table="vendor" column="adressCityS" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="employee">
+    <Hierarchy name="New Hierarchy 0" visible="true" hasAll="true">
+      <Table name="employee" schema="dbo" alias="">
+      </Table>
+      <Level name="idEmploye" visible="true" table="employee" column="idEmploye" type="Numeric" uniqueMembers="true">
+      </Level>
+      <Level name="NAMEEmployee" visible="true" table="employee" column="NAMEEmployee" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="adressEmployee" visible="true" table="employee" column="adressEmployee" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="status">
+    <Hierarchy name="New Hierarchy 0" visible="true" hasAll="true">
+      <Table name="status" schema="dbo" alias="">
+      </Table>
+      <Level name="idStatus" visible="true" table="status" column="idStatus" uniqueMembers="true">
+      </Level>
+      <Level name="status" visible="true" table="status" column="status" type="Integer" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="date">
+    <Hierarchy name="New Hierarchy 0" visible="true" hasAll="true">
+      <Table name="Date" schema="dbo" alias="">
+      </Table>
+      <Level name="idDate" visible="true" table="Date" column="idDate" type="Numeric" uniqueMembers="true">
+      </Level>
+      <Level name="dateDue" visible="true" table="Date" column="dateDue" type="Date" uniqueMembers="false">
+      </Level>
+      <Level name="dateOrdr" visible="true" table="Date" column="dateOrdr" type="Date" uniqueMembers="false">
+      </Level>
+      <Level name="dateShip" visible="true" table="Date" column="dateShip" type="Date" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="shipmeths">
+    <Hierarchy name="New Hierarchy 0" visible="true" hasAll="true">
+      <Table name="ShipMethd" schema="dbo" alias="">
+      </Table>
+      <Level name="shipMethodId" visible="true" table="ShipMethd" column="shipMethodId" type="Numeric" uniqueMembers="true">
+      </Level>
+      <Level name="nameMehod" visible="true" table="ShipMethd" column="nameMehod" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="produits ">
+    <Hierarchy name="New Hierarchy 0" visible="true" hasAll="true">
+      <Table name="produits" schema="dbo" alias="">
+      </Table>
+      <Level name="idProduit" visible="true" table="produits" column="idProduit" type="Numeric" uniqueMembers="true">
+      </Level>
+      <Level name="nameproduit" visible="true" table="produits" column="nameproduit" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="productNumber" visible="true" table="produits" column="productNumber" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="standarPrice" visible="true" table="produits" column="standarPrice" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="MaxorderQty" visible="true" table="produits" column="MaxorderQty" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="MinorderQty" visible="true" table="produits" column="MinorderQty" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="LastReceiptCost" visible="true" table="produits" column="LastReceiptCost" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="LastReceiptDate" visible="true" table="produits" column="LastReceiptDate" type="Date" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="factAachat" visible="true" cache="true" enabled="true">
+    <Table name="factAchat" schema="dbo" alias="">
+    </Table>
+    <DimensionUsage source="date" name="IdDATE" visible="true" foreignKey="IdDATE">
+    </DimensionUsage>
+    <DimensionUsage source="employee" name="idEmploye" visible="true" foreignKey="idEmploye">
+    </DimensionUsage>
+    <DimensionUsage source="status" name="satus" visible="true" foreignKey="satus">
+    </DimensionUsage>
+    <DimensionUsage source="vendor" name="idVendor" visible="true" foreignKey="idVendor">
+    </DimensionUsage>
+    <DimensionUsage source="produits " name="idProduit" visible="true" foreignKey="idProduit">
+    </DimensionUsage>
+    <DimensionUsage source="shipmeths" name="shipMethodID" visible="true" foreignKey="shipMethodID">
+    </DimensionUsage>
+    <Measure name="OrderQty" column="OrderQty" datatype="Integer" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="ReceivedQty" column="ReceivedQty" datatype="Integer" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="StockedQty" column="StockedQty" datatype="Integer" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="frieghtTotal" column="frieghtTotal" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="DueTotal" column="DueTotal" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="salesTotal" column="salesTotal" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="unitprice" column="unitprice" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="taxTotal" column="taxTotal" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="rejectedQty" column="rejectedQty" aggregator="distinct-count" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
